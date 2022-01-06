@@ -1,0 +1,20 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /usr/local/Cellar/apisix/logs/*.log
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 1
+
+setup.dashboards.enabled: false
+
+output.kafka:
+  hosts: ["127.0.0.1:9092"]
+  topic: 'apisix_runtime_logs'
+  codec.json:
+    pretty: false
